@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# PyInstaller output (Phase 4)
+build/
+dist/
+*.spec.bak
+
+# Editors / OS
+.vscode/
+Thumbs.db
