@@ -51,6 +51,11 @@ Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExe}"
 Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; Tasks: desktopicon
 
+[Registry]
+; Windows' "High DPI scaling: Application" option for UxPlay, so its video window
+; stays sharp at 125%/150% display scaling instead of being stretched (blurry).
+Root: HKLM; Subkey: "Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"; ValueType: string; ValueName: "{#UxPlayExe}"; ValueData: "~ HIGHDPIAWARE"; Flags: uninsdeletevalue
+
 [Run]
 ; Remove an old rule first (reinstall / update), then allow UxPlay on Private networks.
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""{#FirewallRule}"""; Flags: runhidden; StatusMsg: "Setting up Windows Firewall..."

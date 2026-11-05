@@ -271,6 +271,7 @@ class App:
         if not exe:
             self.events.put(("fail", env))
             return
+        engines.ensure_sharp_window(exe)
         name = self.settings.values["name"]
         args = engines.uxplay_args(exe, name, self.settings.values["video_engine"],
                                    self.settings.values["fullscreen"])

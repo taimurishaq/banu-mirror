@@ -74,6 +74,32 @@ def find_uxplay():
     )
 
 
+def ensure_sharp_window(exe):
+    """Stop Windows from stretching (blurring) UxPlay's video window.
+
+    UxPlay's GStreamer window doesn't tell Windows it handles display scaling,
+    so at 125%/150% scaling Windows draws it smaller and stretches it.
+    This sets Windows' own "High DPI scaling: Application" compatibility option
+    for uxplay.exe (per user, no admin needed). Returns True if it is set.
+    """
+    import winreg
+    key_path = r"Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"
+    exe = str(Path(exe).resolve())
+    for root in (winreg.HKEY_LOCAL_MACHINE, winreg.HKEY_CURRENT_USER):
+        try:
+            with winreg.OpenKey(root, key_path) as key:
+                if "HIGHDPIAWARE" in winreg.QueryValueEx(key, exe)[0]:
+                    return True  # already set (the installer sets it for all users)
+        except OSError:
+            pass
+    try:
+        with winreg.CreateKey(winreg.HKEY_CURRENT_USER, key_path) as key:
+            winreg.SetValueEx(key, exe, 0, winreg.REG_SZ, "~ HIGHDPIAWARE")
+        return True
+    except OSError:
+        return False
+
+
 def uxplay_args(exe, name, video_engine, fullscreen):
     sink = VIDEO_ENGINES.get(video_engine, "d3d12videosink")
     if fullscreen and sink == "d3d12videosink":
