@@ -66,3 +66,16 @@ cd uxplay/build
 ```
 
 For the Pixel, in PowerShell: `scrcpy -d -m 1280` (USB).
+
+## 7. Start the app
+
+In PowerShell, from the project folder:
+
+```powershell
+py app\main.py
+```
+
+Use `py`, not `python`, so Windows picks the Python you installed in step 1.
+
+The app expects MSYS2 at `C:\msys64` and scrcpy in winget's default folder,
+so keep the default install locations from step 1.
