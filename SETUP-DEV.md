@@ -1,5 +1,8 @@
 # Setting up Banu mirror on another PC (for development)
 
+**Just want to use the app?** You don't need any of this. Download the installer from the
+[Releases page](https://github.com/taimurishaq/banu-mirror/releases/latest) instead.
+
 These steps get a fresh Windows 10/11 64-bit PC ready to keep building Banu mirror.
 
 ## 1. Install the tools
